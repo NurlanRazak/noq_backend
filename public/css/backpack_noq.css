@@ -1,0 +1,103 @@
+.btn-primary,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    color: #1b2a4e;
+    background-color: #fbd500;
+    border-color: #fbd500;
+}
+
+.btn-primary:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+	background-color: #fbd500;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:not(:disabled):not(.disabled).active,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:not(:disabled):not(.disabled):active,
+.dataTables_wrapper .dataTables_paginate .show>.dropdown-toggle.paginate_button.current,
+.show>.btn-primary.dropdown-toggle {
+	background-color: #fbd500;
+	border-color: #5844d0;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    background-color: #fbd500;
+}
+
+.navbar-color.app-header .navbar-brand, .navbar-color .navbar-text a, .navbar-color .navbar-text a:focus, .navbar-color .navbar-text a:hover {
+    color: #1b2a4e;
+}
+
+.text-primary {
+    color: #fbd500!important;
+}
+
+h1 {
+    color: #1b2a4e!important;
+}
+
+.btn-link {
+    color: #c3a80f;
+}
+
+.btn-outline-primary {
+    color: #1b2a4e;
+    border-color: #fbd500;
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #fbd500;
+    border-color: #fbd500;
+}
+
+.btn:hover,
+.dataTables_wrapper
+.dataTables_paginate
+.paginate_button:hover {
+    color: #4024e8;
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #fbd500;
+    border-color: #fbd500;
+}
+
+.page-link:hover { color: #7C69EF; }
+
+a { color: #c3a80f; }
+a:hover { color: #1b2a4e; }
+.table-hover tbody tr:hover,
+#crudTable tbody tr:hover {
+	background-color: rgba(124, 105, 239, 0.1);
+}
+
+.sidebar.sidebar-pills .nav-link.active .nav-icon,
+.sidebar.sidebar-pills .nav-link:hover .nav-icon,
+.sidebar.sidebar-pills .nav-link.active,
+.sidebar.sidebar-pills .nav-link:hover,
+.sidebar-pills .nav-link:hover .nav-icon {
+    color: #1b2a4e!important;
+    background-color: #ffd800ba!important;
+}
+
+.card.bg-primary {
+    border-color: #fbd500;
+}
+
+.bg-primary {
+    background-color: #fbd500!important;
+}
+
+.daterangepicker .ranges li.active,
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #fbd500!important;
+}
+
+.pace .pace-progress {
+	background: #fbd500;
+}
