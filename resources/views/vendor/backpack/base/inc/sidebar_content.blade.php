@@ -5,3 +5,5 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('place') }}'><i class='nav-icon la la-store-alt'></i> {{ trans_choice('admin.places', 2) }}</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('menu') }}'><i class='nav-icon la la-school'></i> {{ trans_choice('admin.menus', 2) }}</a></li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i class='nav-icon la la-list-alt'></i> {{ trans_choice('admin.categories', 2) }}</a></li>
