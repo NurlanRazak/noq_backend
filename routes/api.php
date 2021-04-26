@@ -26,3 +26,13 @@ Route::get('banners', 'BannerController@getBanners');
 Route::get('migrate', function () {
 	\Artisan::call('migrate');
 });
+
+
+Route::get('cache/clear', function () {
+	\Artisan::call('cache:clear');
+	\Artisan::call('config:clear');
+	\Artisan::call('view:clear');
+	\Artisan::call('route:clear');
+
+	return 'ok';
+});
