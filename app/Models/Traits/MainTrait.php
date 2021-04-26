@@ -13,7 +13,7 @@ trait MainTrait
 
     public function getImgAttribute()
     {
-        return $this->image ? config('app.url').'/'.$this->image : null;
+        return $this->image ? config('app.url').'/uploads/'.$this->image : null;
     }
 
     public function getImgsAttribute()

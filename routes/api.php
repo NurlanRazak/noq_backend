@@ -20,3 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/auth/login', 'AuthController@login');
 Route::get('verify/phone', 'AuthController@verifyPhone');
+
+Route::get('banners', 'BannerController@getBanners');
+
+Route::get('migrate', function () {
+	\Artisan::call('migrate');
+});
