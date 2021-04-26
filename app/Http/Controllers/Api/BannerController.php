@@ -13,7 +13,7 @@ class BannerController extends Controller
 
     public function getBanners(Request $request)
     {
-        $banners = Banner::active()->orderBy('lft')->get();
+        $banners = Banner::select('id', 'name', 'image', 'description', 'link')->active()->orderBy('lft')->get();
 
         return $this->success($banners);
     }
