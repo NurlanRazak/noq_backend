@@ -18,8 +18,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/auth/login', 'AuthController@login');
+Route::post('auth/login', 'AuthController@login');
+Route::post('auth/register', 'AuthController@register');
 Route::get('verify/phone', 'AuthController@verifyPhone');
+
+// Verify email
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+    ->middleware(['signed', 'throttle:6,1'])
+    ->name('verification.verify');
+
+// Resend link to verify email
+Route::post('/email/verify/resend', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth:api', 'throttle:6,1'])->name('verification.send');
 
 Route::get('banners', 'BannerController@getBanners');
 

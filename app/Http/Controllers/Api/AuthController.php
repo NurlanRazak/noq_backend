@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\VerificationToken;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendSmsJob;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -19,8 +20,40 @@ class AuthController extends Controller
         return (string)rand(10 ** (config('lmservice_auth.verification_code_length') - 1), 10 ** config('lmservice_auth.verification_code_length') - 1);
     }
 
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'email|required|unique:users',
+            'password' => 'required|confirmed'
+        ]);
+
+        $validatedData['password'] = bcrypt($request->password);
+
+        $user = User::create($validatedData);
+
+        event(new Registered($user));
+
+        $accessToken = $user->createToken('authToken')->accessToken;
+
+        return response(['user' => $user, 'access_token' => $accessToken]);
+    }
+
     public function login(Request $request)
     {
+        $loginData = $request->validate([
+            'email' => 'email|required',
+            'password' => 'required'
+        ]);
+
+        if (!auth()->attempt($loginData)) {
+            return response(['message' => 'Invalid Credentials']);
+        }
+
+        $accessToken = auth()->user()->createToken('authToken')->accessToken;
+
+        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
+
+
         $user = User::where('phone', $request->phone)->first();
         if (!$user) {
             $user = User::create([
