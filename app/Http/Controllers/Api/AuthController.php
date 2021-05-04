@@ -47,9 +47,9 @@ class AuthController extends Controller
             return response(['message' => 'Invalid Credentials']);
         }
 
-        $accessToken = auth()->user()->createToken('authToken')->accessToken;
+        $accessToken = auth()->user()->createToken('API Token')->plainTextToken;
 
-        return response(['user' => auth()->user(), 'access_token' => $accessToken->token]);
+        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
 
 
         $user = User::where('phone', $request->phone)->first();
