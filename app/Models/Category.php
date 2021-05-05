@@ -40,6 +40,11 @@ class Category extends Model implements StatusInterface
     {
         return $this->belongsTo(Menu::class);
     }
+
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -49,3 +49,7 @@ Route::get('cache/clear', function () {
 
 	return 'ok';
 });
+
+
+Route::get('place', 'IndexController@getPlaces');
+Route::get('menu/{placeId}', 'IndexController@getMenu');

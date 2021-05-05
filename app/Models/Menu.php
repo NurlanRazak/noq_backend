@@ -40,6 +40,11 @@ class Menu extends Model implements StatusInterface
     {
         return $this->belongsTo(Place::class);
     }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

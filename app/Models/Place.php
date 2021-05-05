@@ -26,6 +26,7 @@ class Place extends Model implements StatusInterface
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $appends = ['img'];
 
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +63,7 @@ class Place extends Model implements StatusInterface
         // or use your own disk, defined in config/filesystems.php
         $disk = 'uploads';
         // destination path relative to the disk above
-        $destination_path = "places"; 
+        $destination_path = "places";
 
         // if the image was erased
         if ($value==null) {
