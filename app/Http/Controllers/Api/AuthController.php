@@ -27,6 +27,10 @@ class AuthController extends Controller
             'password' => 'required|confirmed'
         ]);
 
+        if ($validatedData->fails()) {
+            return $this->error('Oops something gone wrong', 422);
+        }
+
         $validatedData['password'] = bcrypt($request->password);
 
         $user = User::create($validatedData);
@@ -44,12 +48,12 @@ class AuthController extends Controller
         ]);
 
         if (!auth()->attempt($loginData)) {
-            return response(['message' => 'Invalid Credentials']);
+            return $this->error('Oops something gone wrong', 422);
         }
 
         $accessToken = auth()->user()->createToken('API Token')->plainTextToken;
 
-        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
+        return $this->success(['user' => auth()->user(), 'access_token' => $accessToken]);
 
 
         $user = User::where('phone', $request->phone)->first();
