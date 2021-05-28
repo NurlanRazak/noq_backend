@@ -13,3 +13,5 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('subcategory') }}'><i class='nav-icon la la-list'></i> {{ trans_choice('admin.subcategories', 2) }}</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('product') }}'><i class='nav-icon la la-pizza-slice'></i> {{ trans_choice('admin.products', 2) }}</a></li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('order') }}'><i class='nav-icon la la-shopping-cart'></i> {{ trans_choice('admin.orders', 2) }}</a></li>

@@ -14,6 +14,9 @@ return [
     'menu' => 'Меню',
     'banners' => 'баннер|Баннеры',
     'products' => 'продукт|Продукты',
+    'product' => 'Продукт',
+    'orders' => 'заказ|Заказы',
+    'user' => 'Пользователь',
 
     'name' => 'Название',
     'image' => 'Изображение',
@@ -36,10 +39,25 @@ return [
     'lng' => 'Долгота',
     'phone' => 'Номер телефона',
     'price' => 'Цена',
-    'quantity' => 'Остаток',
+    'quantity' => 'Количество',
     'cooking_time' => 'Время готовки',
     'calories' => 'Калории',
     'weight' => 'Масса',
+    'to_time' => 'К времени',
+    'total_amount' => 'Общая сумма',
+    'payment_status' => 'Статус оплаты',
+    'delivery_method' => 'Метод доставки',
+    'delivery_status' => 'Статус доставки',
+
+    'not_paid' => 'Не оплачено',
+    'paid' => 'Оплачено',
+
+    'courier' => 'Доставка курьером',
+    'pickup' => 'Самовывоз',
+
+    'pickup_issued' => 'Самовывоз сделан',
+    'courier_delivered' => 'Доставлен',
+    'on_process' => 'В процессе',
 
     'updated_at' => 'Обновлен в',
     'created_at' => 'Создан в',
