@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'public_key' => 'pk_f6530c7ea5de0d2cbdf8d56cc1563',
-    'private_key' => '0b411d64625233f40f911bf3dc1d8186',
+    'public_key' => 'pk_d48ddcdec81d75de879179d2c37d7',
+    'private_key' => 'de581f7fcd0fefe17eb3599f53d052f8',
 ];

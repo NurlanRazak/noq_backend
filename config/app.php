@@ -174,6 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
+        App\Services\Payment\CloudPayment\CloudPaymentServiceProvider::class,
 
     ],
 
@@ -227,7 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'CloudPayment' => App\Services\Payment\CloudPayment\Facades\CloudPayment::class,
     ],
 
 ];

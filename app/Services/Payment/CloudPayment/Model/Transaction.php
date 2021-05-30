@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\Payment\CloudPayment\Model;
+use App\Models\UserBankCard;
 
 class Transaction
 {
@@ -999,4 +1000,26 @@ class Transaction
 
         return $transaction;
     }
+
+    public function getCardHash()
+    {
+        $firsts = str_split($this->getCardFirstSix(), 4);
+
+        return  $firsts[0].'-'.$firsts[1].'XX-XXXX-'.$this->getCardLastFour();
+    }
+
+
+    public function createBankcard($secure = false)
+	{
+		return UserBankCard::create([
+			'user_id'	=> $this->getAccountId(),
+			'card_num'	=> $this->getCardHash(),
+			'card_name'	=> $this->getCardHolderName(),
+			'bank'		=> $this->getIssuer(),
+			'country' 	=> $this->getIssuerBankCountry(),
+			'token'		=> $this->getToken(),
+			'month'		=> $this->getCardExpiredMonth(),
+            'year'		=> $this->getCardExpiredYear(),
+		]);
+	}
 }

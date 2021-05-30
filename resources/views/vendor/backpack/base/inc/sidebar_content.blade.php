@@ -15,3 +15,5 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('product') }}'><i class='nav-icon la la-pizza-slice'></i> {{ trans_choice('admin.products', 2) }}</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('order') }}'><i class='nav-icon la la-shopping-cart'></i> {{ trans_choice('admin.orders', 2) }}</a></li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('userbankcard') }}'><i class='nav-icon la la-cc-visa'></i> {{ trans_choice('admin.user_bank_cards', 2) }}</a></li>

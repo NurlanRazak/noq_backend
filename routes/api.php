@@ -19,6 +19,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user_bankcard/list', 'UserController@getUserBankCard');
+	Route::post('/user_bankcard/create', 'UserController@createUserBankCard');
+    Route::post('/user_bankcard/destroy', 'UserController@destroyUserBankCard');
+
+    Route::post('/order/create', 'OrderController@createNewOrder');
+    Route::get('/order/list', 'OrderController@orderList');
+    Route::get('/order/{id?}', 'OrderController@orderById');
+});
+
+
 Route::post('auth/login', 'AuthController@login');
 Route::post('auth/register', 'AuthController@register');
 Route::get('verify/phone', 'AuthController@verifyPhone');

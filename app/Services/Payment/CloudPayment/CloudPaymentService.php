@@ -2,6 +2,7 @@
 
 namespace App\Services\Payment\CloudPayment;
 use Illuminate\Support\Facades\Http;
+use App\Models\UserBankCard;
 
 class CloudPaymentService
 {
@@ -14,6 +15,9 @@ class CloudPaymentService
 
     protected $locale = 'en-US';
 
+    protected $currency = 'KZT';
+
+
     public function __construct()
     {
         $this->publicKey = config('cloudpayment.public_key');
@@ -25,23 +29,10 @@ class CloudPaymentService
         $params['CultureName'] = $this->locale;
         $headers[] = 'Content-Type: application/json';
 
-        $response = Http::withHeaders($headers)->post($this->url . $endpoint, []);
-
-        $curl = curl_init();
-
-        curl_setopt($curl, CURLOPT_URL, $this->url . $endpoint);
-        curl_setopt($curl, CURLOPT_USERPWD, sprintf('%s:%s', $this->publicKey, $this->privateKey));
-        curl_setopt($curl, CURLOPT_TIMEOUT, 20);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($curl);
-
-        curl_close($curl);
-
+		return Http::withBasicAuth($this->publicKey, $this->privateKey)
+			->withHeaders($headers)
+			->post($this->url . $endpoint, $params)
+			->json();
     }
 
     public function getLocale()
@@ -54,12 +45,12 @@ class CloudPaymentService
         $this->locale = $locale;
     }
 
-    public function chargeCard($amount, $currency, $ipAddress, $cardHolderName, $cryptogram, $params = [], $requireConfirmation = false)
+    public function chargeCard($amount, $ipAddress, $cardHolderName, $cryptogram, $params = [], $requireConfirmation = false)
     {
         $endpoint = $requireConfirmation ? '/payments/cards/auth' : '/payments/cards/charge';
         $defaultParams = [
             'Amount' => $amount,
-            'Currency' => $currency,
+            'Currency' => $this->currency,
             'IpAddress' => $ipAddress,
             'Name' => $cardHolderName,
             'CardCryptogramPacket' => $cryptogram
@@ -82,14 +73,14 @@ class CloudPaymentService
         return Model\Required3DS::fromArray($response['Model']);
     }
 
-    public function chargeToken($amount, $currency, $accountId, $token, $params = [], $requireConfirmation = false)
+    public function chargeToken(UserBankCard $card, $amount, $params = [], $requireConfirmation = false)
     {
         $endpoint = $requireConfirmation ? '/payments/tokens/auth' : '/payments/tokens/charge';
         $defaultParams = [
             'Amount' => $amount,
-            'Currency' => $currency,
-            'AccountId' => $accountId,
-            'Token' => $token,
+            'Currency' => $this->currency,
+            'AccountId' => $card->user_id,
+            'Token' => $card->token,
         ];
 
         $response = $this->sendRequest($endpoint, array_merge($defaultParams, $params));

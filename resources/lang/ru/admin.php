@@ -17,6 +17,7 @@ return [
     'product' => 'Продукт',
     'orders' => 'заказ|Заказы',
     'user' => 'Пользователь',
+    'user_bank_cards' => 'карту|Банковские карты',
 
     'name' => 'Название',
     'image' => 'Изображение',
@@ -48,6 +49,13 @@ return [
     'payment_status' => 'Статус оплаты',
     'delivery_method' => 'Метод доставки',
     'delivery_status' => 'Статус доставки',
+    'card_num' => 'Номер карты',
+    'card_name' => 'Имя на карте',
+    'card_end_date' => 'Дата окончания карты',
+    'card_country' => 'Страна',
+    'card_bank' => 'Банк',
+    'card_year' => 'Год',
+    'card_month' => 'Месяц',
 
     'not_paid' => 'Не оплачено',
     'paid' => 'Оплачено',

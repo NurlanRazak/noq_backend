@@ -22,10 +22,6 @@ class AuthController extends Controller
             'password' => 'required|confirmed'
         ]);
 
-        if ($validatedData->fails()) {
-            return $this->error('Oops something gone wrong', 422);
-        }
-
         $validatedData['password'] = bcrypt($request->password);
 
         $user = User::create($validatedData);
