@@ -19,7 +19,7 @@ class OrderController extends Controller
             'user_id' => $user->id,
             'products' => $data['products'],
             'to_time' => $data['to_time'] ?? null,
-            'total_amont' => $data['total_amont'],
+            'total_amount' => $data['total_amount'],
             'payment_status' => 0,
             'delivery_method' => $data['delivery_method'],
             'place_id' => $data['place_id'],
@@ -27,7 +27,7 @@ class OrderController extends Controller
 
         $card = UserBankCard::where('user_id', $user->id)->where('id', $data['card_id'])->firstOrFail();
 
-        $charging = \CloudPayment::chargeToken($card, $order->total_amont);
+        $charging = \CloudPayment::chargeToken($card, $order->total_amount);
 
         return $order;
     }

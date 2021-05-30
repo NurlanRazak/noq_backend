@@ -17,7 +17,7 @@ class Order extends Model
 
     const NOT_PAID = 0;
     const PAID = 1;
-    
+
     const COURIER = 1;
     const PICKUP = 0;
 
