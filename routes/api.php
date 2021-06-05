@@ -64,3 +64,4 @@ Route::get('cache/clear', function () {
 
 Route::get('place', 'IndexController@getPlaces');
 Route::get('menu/{placeId}', 'IndexController@getMenu');
+Route::get('categories/{menuId}', 'IndexController@getCategories');

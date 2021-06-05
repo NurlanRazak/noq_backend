@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Models\Place;
 use App\Models\Menu;
+use App\Models\Category;
+use App\Models\Subcategory;
+use App\Models\Product;
 
 class IndexController extends Controller
 {
@@ -27,12 +30,20 @@ class IndexController extends Controller
 
     public function getMenu(Request $request, $placeId)
     {
-        $menu = Menu::where('place_id', $placeId)->with(['categories' => function ($query) {
-            $query->with(['subcategories' => function ($query) {
-                $query->with('products');
-            }]);
-        }])->first();
+        $menu = Menu::where('place_id', $placeId)->firstOrFail();
+        $categories = Category::where("menu_id", $menu->id)->get()->pluck('id');
+        $subcategories = Subcategory::whereIn('category_id', $categories)->get()->pluck('id');
+        $products = Product::whereIn("subcategory_id", $subcategories)->get();
 
-        return $this->success($menu);
+        return $this->success($products);
+    }
+
+    public function getCategories(Request $request, $menuId)
+    {
+        $categories = Category::select('id', 'menu_id', 'name')->where("menu_id", $menuId)->with(['subcategories' => function ($query) {
+            $query->select('id', 'category_id', 'name');
+        }])->orderBy('lft')->active()->get();
+
+        return $this->success($categories);
     }
 }
