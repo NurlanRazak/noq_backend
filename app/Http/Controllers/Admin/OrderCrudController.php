@@ -13,6 +13,10 @@ class OrderCrudController extends DefaultCrudController
     public function setup()
     {
         parent::setup();
+        $user = backpack_user();
+        if ($user->place_id) {
+            $this->crud->addClause("where", "place_id", $user->place_id);
+        }
     }
 
     protected function setupListOperation()
@@ -28,6 +32,13 @@ class OrderCrudController extends DefaultCrudController
             [
                 'name' => 'products',
                 'label' => trans_choice('admin.products', 2),
+                'type'            => 'table',
+                'entity_singular' => trans('admin.product'), // used on the "Add X" button
+                'columns'         => [
+                    'product'  => trans('admin.product'),
+                    'quantity'  => trans('admin.quantity'),
+                    'price' => trans('admin.price'),
+                ],
             ],
             [
                 'name' => 'to_time',
@@ -56,6 +67,13 @@ class OrderCrudController extends DefaultCrudController
                 'type' => 'select_from_array',
                 'options' => Order::getDeliveryStatus(),
             ],
+            [
+                'name' => 'place_id',
+                'label' => trans('admin.place'),
+                'type' => 'select',
+                'entity' => 'place',
+                'attribute' => "name",
+            ],
         ]);
     }
 
@@ -64,6 +82,13 @@ class OrderCrudController extends DefaultCrudController
         CRUD::setValidation(OrderRequest::class);
 
         CRUD::addFields([
+            [
+                'name' => 'place_id',
+                'label' => trans('admin.place'),
+                'type' => 'select2',
+                'entity' => 'place',
+                'attribute' => "name",
+            ],
             [
                 'name' => 'user_id',
                 'label' => trans('admin.user'),

@@ -23,8 +23,6 @@ class CreateOrders extends Migration
             $table->tinyInteger('payment_status')->default(0);
             $table->tinyInteger('delivery_method')->default(0);
             $table->tinyInteger('delivery_status')->default(0);
-            $table->unsignedBigInteger('place_id');
-            $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
             $table->timestamps();
         });
     }

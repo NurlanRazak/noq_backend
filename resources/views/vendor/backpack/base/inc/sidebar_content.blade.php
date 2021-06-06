@@ -1,5 +1,15 @@
 <!-- This file is used to store sidebar items, starting with Backpack\Base 0.9.0 -->
+@php
+    $user = backpack_user();
+@endphp
+
+@if ($user->place_id)
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('order') }}'><i class='nav-icon la la-shopping-cart'></i> {{ trans_choice('admin.orders', 2) }}</a></li>
+
+@else
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
+
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('banner') }}'><i class='nav-icon la la-image'></i> {{ trans_choice('admin.banners', 2) }}</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('city') }}'><i class='nav-icon la la-city'></i> {{ trans_choice('admin.cities', 2) }}</a></li>
@@ -17,3 +27,7 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('order') }}'><i class='nav-icon la la-shopping-cart'></i> {{ trans_choice('admin.orders', 2) }}</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('userbankcard') }}'><i class='nav-icon la la-cc-visa'></i> {{ trans_choice('admin.user_bank_cards', 2) }}</a></li>
+
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('user') }}'><i class='nav-icon la la-users'></i> {{ trans_choice('admin.users', 2) }}</a></li>
+
+@endif
