@@ -36,14 +36,14 @@ class Subcategory extends Model implements StatusInterface
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_subcategory', 'subcategory_id', 'category_id');
     }
     /*
     |--------------------------------------------------------------------------

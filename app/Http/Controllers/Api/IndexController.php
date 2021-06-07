@@ -32,7 +32,9 @@ class IndexController extends Controller
     {
         $menu = Menu::where('place_id', $placeId)->firstOrFail();
         $categories = Category::where("menu_id", $menu->id)->get()->pluck('id');
-        $subcategories = Subcategory::whereIn('category_id', $categories)->get()->pluck('id');
+        $subcategories = Subcategory::whereHas('categories', function ($query) use ($categories) {
+            $query->where('category_id', $categories);
+        })->get()->pluck('id');
         $products = Product::whereIn("subcategory_id", $subcategories)->get();
 
         return $this->success($products);
@@ -41,7 +43,7 @@ class IndexController extends Controller
     public function getCategories(Request $request, $menuId)
     {
         $categories = Category::select('id', 'menu_id', 'name')->where("menu_id", $menuId)->with(['subcategories' => function ($query) {
-            $query->select('id', 'category_id', 'name');
+            $query->select('subcategories.id', 'subcategories.category_id', 'subcategories.name');
         }])->orderBy('lft')->active()->get();
 
         return $this->success($categories);

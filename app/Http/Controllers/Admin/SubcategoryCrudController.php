@@ -21,10 +21,10 @@ class SubcategoryCrudController extends DefaultCrudController
     {
         CRUD::addColumns([
             [
-                'name' => 'category_id',
-                'label' => trans('admin.category'),
-                'type' => 'select',
-                'entity' => 'category',
+                'name' => 'categories',
+                'label' => trans_choice('admin.categories', 2),
+                'type' => 'select_multiple',
+                'entity' => 'categories',
                 'attribute' => 'name',
                 'model' => Category::class,
             ],
@@ -47,13 +47,14 @@ class SubcategoryCrudController extends DefaultCrudController
         CRUD::setValidation(SubcategoryRequest::class);
 
         CRUD::addFields([
-            [
-                'name' => 'category_id',
-                'label' => trans('admin.category'),
-                'type' => 'select2',
-                'entity' => 'category',
-                'attribute' => 'name',
-                'model' => Category::class,
+            [    // Select2Multiple = n-n relationship (with pivot table)
+                'label' => trans_choice('admin.categories', 2),
+                'type'      => 'select2_multiple',
+                'name'      => 'categories',
+                 'entity'    => 'categories',
+                 'model'     => Category::class,
+                 'attribute' => 'name',
+                 'pivot'     => true,
             ],
             [
                 'name' => 'name',

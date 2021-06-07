@@ -43,7 +43,7 @@ class Category extends Model implements StatusInterface
 
     public function subcategories()
     {
-        return $this->hasMany(Subcategory::class);
+        return $this->belongsToMany(Subcategory::class, 'category_subcategory', 'category_id', 'subcategory_id');
     }
     /*
     |--------------------------------------------------------------------------
