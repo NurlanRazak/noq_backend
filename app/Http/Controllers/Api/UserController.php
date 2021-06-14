@@ -57,4 +57,28 @@ class UserController extends Controller
             ['user_id', $request->user()->id],
         ])->delete();
     }
+
+    public function post3dSecure(Request $request)
+    {
+        try {
+			$transaction = \CloudPayment::confirm3DS($data['MD'], $data['PaRes']);
+
+			$transaction->createBankcard(true);
+			// RefundTestPaymentJob::dispatch($transaction)->delay(now()->addSeconds(5))->onQueue('auto');
+
+			$data = [
+				'success' => true,
+			];
+
+		} catch (\Exception $e) {
+			$data = [
+				'success' => false,
+				'error_message' => $e->getMessage(),
+			];
+		}
+
+		return view('post3ds', [
+			'data' => $data
+		]);
+    }
 }

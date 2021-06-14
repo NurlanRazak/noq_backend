@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('user_bankcard/secure', 'UserController@post3dSecure');
+
 Route::middleware('auth:api')->group(function () {
     Route::get('/user_bankcard/list', 'UserController@getUserBankCard');
 	Route::post('/user_bankcard/create', 'UserController@createUserBankCard');
@@ -45,7 +47,15 @@ Route::post('/email/verify/resend', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth:api', 'throttle:6,1'])->name('verification.send');
 
+//main getters for mobile app
 Route::get('banners', 'BannerController@getBanners');
+Route::get('place', 'IndexController@getPlaces');
+Route::get('menu/{placeId}', 'IndexController@getMenu');
+Route::get('categories/{menuId}', 'IndexController@getCategories');
+
+
+
+
 
 Route::get('migrate', function () {
 	\Artisan::call('migrate');
@@ -60,8 +70,3 @@ Route::get('cache/clear', function () {
 
 	return 'ok';
 });
-
-
-Route::get('place', 'IndexController@getPlaces');
-Route::get('menu/{placeId}', 'IndexController@getMenu');
-Route::get('categories/{menuId}', 'IndexController@getCategories');
