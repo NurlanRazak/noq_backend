@@ -51,10 +51,12 @@ class CategoryCrudController extends DefaultCrudController
             [
                 'name' => 'menu_id',
                 'label' => trans('admin.menu'),
-                'type' => 'select2',
+                'type' => 'select_grouped',
                 'entity' => 'menu',
                 'attribute' => 'name',
-                'model' => Menu::class,
+                'group_by'  => 'place', // the relationship to entity you want to use for grouping
+                'group_by_attribute' => 'name', // the attribute on related model, that you want shown
+                'group_by_relationship_back' => 'menus',
             ],
             [
                 'name' => 'name',
