@@ -92,6 +92,29 @@ class ProductCrudController extends DefaultCrudController
                 'type' => 'textarea',
             ],
             [
+                'name' => 'options',
+                'label' => trans('admin.options'),
+                'type' => 'repeatable',
+                'fields' => [
+                    [
+                        'name' => 'name',
+                        'label' => trans('admin.name'),
+                        'type' => 'text',
+                        'wrapper' => [
+                            'class' => 'form-group col-sm-6',
+                        ],
+                    ],
+                    [
+                        'name' => 'price',
+                        'label' => trans('admin.price'),
+                        'type' => 'number',
+                        'wrapper' => [
+                            'class' => 'form-group col-sm-6',
+                        ],
+                    ]
+                ],
+            ],
+            [
                 'name' => 'price',
                 'label' => trans('admin.price'),
                 'type' => 'number',

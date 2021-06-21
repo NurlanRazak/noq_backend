@@ -26,6 +26,9 @@ class Product extends Model implements StatusInterface
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $casts = [
+        'options' => 'array',
+    ];
     protected $appends = ['img'];
 
     /*
