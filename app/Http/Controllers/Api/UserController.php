@@ -61,6 +61,7 @@ class UserController extends Controller
     public function post3dSecure(Request $request)
     {
         try {
+            $data = $request->toArray();
 			$transaction = \CloudPayment::confirm3DS($data['MD'], $data['PaRes']);
 
 			$transaction->createBankcard(true);
