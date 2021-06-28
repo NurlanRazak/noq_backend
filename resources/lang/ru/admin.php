@@ -59,6 +59,7 @@ return [
     'card_bank' => 'Банк',
     'card_year' => 'Год',
     'card_month' => 'Месяц',
+    'password' => 'Пароль',
 
     'not_paid' => 'Не оплачено',
     'paid' => 'Оплачено',

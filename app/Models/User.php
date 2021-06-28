@@ -48,4 +48,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Place::class, 'place_id');
     }
+
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = \Hash::make($value);
+    }
+
+    public function getPasswordAttribute()
+    {
+        return $this->attributes['password'];
+    }
 }

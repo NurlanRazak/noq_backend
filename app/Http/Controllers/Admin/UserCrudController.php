@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 class UserCrudController extends DefaultCrudController
 {
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
 
     public function setup()
     {
@@ -48,7 +49,11 @@ class UserCrudController extends DefaultCrudController
                  'name' => 'email',
                  'label' => trans("admin.email"),
              ],
-
+             [
+                 'name' => 'password',
+                 'label' => trans('admin.password'),
+                 'type' => 'password',
+             ],
              [
                  'name' => 'place_id',
                  'label' => trans("admin.place"),
