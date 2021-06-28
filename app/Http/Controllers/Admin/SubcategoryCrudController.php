@@ -15,6 +15,14 @@ class SubcategoryCrudController extends DefaultCrudController
     public function setup()
     {
         parent::setup();
+        $user = backpack_user();
+        if ($user->place_id) {
+            $this->crud->addClause("whereHas", "categories", function($query) use($user) {
+                $query->whereHas('menu', function ($query) use($user) {
+                    $query->where('place_id', $user->place_id);
+                });
+            });
+        }
     }
 
     protected function setupListOperation()

@@ -14,6 +14,10 @@ class MenuCrudController extends DefaultCrudController
     public function setup()
     {
         parent::setup();
+        $user = backpack_user();
+        if ($user->place_id) {
+            $this->crud->addClause("where", "place_id", $user->place_id);
+        }
     }
 
     protected function setupListOperation()
