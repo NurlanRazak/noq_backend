@@ -25,6 +25,9 @@ class Order extends Model
     const COURIER_DELIVERED = 3;
     const ON_PROCESS = 1;
 
+    const CASH=0;
+    const CARD=1; 
+
     protected $table = 'orders';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
@@ -89,6 +92,14 @@ class Order extends Model
             self::PICKUP_ISSUED => trans('admin.pickup_issued'),
             self::COURIER_DELIVERED => trans('admin.courier_delivered'),
             self::ON_PROCESS => trans('admin.on_process'),
+        ];
+    }
+
+    public static function getPaymentTypeOptions()
+    {
+        return [
+            self::CASH => trans('admin.cash'),
+            self::CARD => trans('admin.card'),
         ];
     }
     /*

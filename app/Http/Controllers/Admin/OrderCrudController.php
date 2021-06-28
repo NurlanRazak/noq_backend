@@ -50,6 +50,12 @@ class OrderCrudController extends DefaultCrudController
                 'suffix' => ' тг',
             ],
             [
+                'name' => 'payment_type',
+                'label' => trans('admin.payment_type'),
+                'type' => 'select_from_array',
+                'options' => Order::getPaymentTypeOptions(),
+            ],
+            [
                 'name' => 'payment_status',
                 'label' => trans('admin.payment_status'),
                 'type' => 'select_from_array',
@@ -135,12 +141,21 @@ class OrderCrudController extends DefaultCrudController
                 ],
             ],
             [
+                'name' => 'payment_type',
+                'label' => trans('admin.payment_type'),
+                'type' => 'select2_from_array',
+                'options' => Order::getPaymentTypeOptions(),
+                'wrapper' => [
+                    'class' => 'form-group col-sm-4',
+                ],
+            ],
+            [
                 'name' => 'delivery_method',
                 'label' => trans('admin.delivery_method'),
                 'type' => 'select2_from_array',
                 'options' => Order::getDeliveryMethods(),
                 'wrapper' => [
-                    'class' => 'form-group col-sm-6',
+                    'class' => 'form-group col-sm-4',
                 ],
             ],
             [
@@ -149,7 +164,7 @@ class OrderCrudController extends DefaultCrudController
                 'type' => 'select2_from_array',
                 'options' => Order::getDeliveryStatus(),
                 'wrapper' => [
-                    'class' => 'form-group col-sm-6',
+                    'class' => 'form-group col-sm-4',
                 ],
             ],
         ]);

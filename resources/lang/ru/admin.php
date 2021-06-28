@@ -60,6 +60,10 @@ return [
     'card_year' => 'Год',
     'card_month' => 'Месяц',
     'password' => 'Пароль',
+    'payment_type' => 'Способ оплаты',
+
+    'cash' => 'Наличными',
+    'card' => 'Картой',
 
     'not_paid' => 'Не оплачено',
     'paid' => 'Оплачено',
