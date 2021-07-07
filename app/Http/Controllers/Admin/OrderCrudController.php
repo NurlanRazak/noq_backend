@@ -80,6 +80,13 @@ class OrderCrudController extends DefaultCrudController
                 'entity' => 'place',
                 'attribute' => "name",
             ],
+            [
+                'name' => 'table_id',
+                'label' => trans('admin.table'),
+                'type' => 'select',
+                'entity' => 'table',
+                'attribute' => 'name',
+            ],
         ]);
     }
 
@@ -102,14 +109,24 @@ class OrderCrudController extends DefaultCrudController
                 'entity' => 'user',
                 'attribute' => 'phone',
                 'wrapper' => [
-                    'class' => 'form-group col-sm-6',
+                    'class' => 'form-group col-sm-4',
+                ],
+            ],
+            [
+                'name' => 'table_id',
+                'label' => trans('admin.table'),
+                'type' => 'select2',
+                'entity' => 'table',
+                'attribute' => 'name',
+                'wrapper' => [
+                    'class' => 'form-group col-sm-4',
                 ],
             ],
             [
                 'name' => 'to_time',
                 'label' => trans('admin.to_time'),
                 'wrapper' => [
-                    'class' => 'form-group col-sm-6',
+                    'class' => 'form-group col-sm-4',
                 ],
             ],
             [

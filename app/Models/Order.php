@@ -59,6 +59,11 @@ class Order extends Model
     {
         return $this->belongsTo(Place::class, 'place_id');
     }
+
+    public function table()
+    {
+        return $this->belongsTo(Table::class, 'table_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
