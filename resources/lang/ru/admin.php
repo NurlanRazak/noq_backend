@@ -61,6 +61,12 @@ return [
     'card_month' => 'Месяц',
     'password' => 'Пароль',
     'payment_type' => 'Способ оплаты',
+    'order_status' => 'Статус заказа',
+    'success' => 'Успешно',
+    'canceled' => 'Отменен',
+    'order_method' => 'Заказ',
+    'withself' => 'Собой',
+    'inside' => 'Внутри',
 
     'cash' => 'Наличными',
     'card' => 'Картой',

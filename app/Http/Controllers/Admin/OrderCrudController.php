@@ -151,7 +151,7 @@ class OrderCrudController extends DefaultCrudController
             ],
             [
                 'name' => 'delivery_method',
-                'label' => trans('admin.delivery_method'),
+                'label' => trans('admin.order_method'),
                 'type' => 'select2_from_array',
                 'options' => Order::getDeliveryMethods(),
                 'wrapper' => [
@@ -160,7 +160,7 @@ class OrderCrudController extends DefaultCrudController
             ],
             [
                 'name' => 'delivery_status',
-                'label' => trans('admin.delivery_status'),
+                'label' => trans('admin.order_status'),
                 'type' => 'select2_from_array',
                 'options' => Order::getDeliveryStatus(),
                 'wrapper' => [

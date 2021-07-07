@@ -18,15 +18,15 @@ class Order extends Model
     const NOT_PAID = 0;
     const PAID = 1;
 
-    const COURIER = 1;
-    const PICKUP = 0;
+    const WITHSELF = 1;
+    const INSIDE = 0;
 
-    const PICKUP_ISSUED = 2;
-    const COURIER_DELIVERED = 3;
+    const SUCCESS = 2;
+    const CANCELED = 3;
     const ON_PROCESS = 1;
 
     const CASH=0;
-    const CARD=1; 
+    const CARD=1;
 
     protected $table = 'orders';
     // protected $primaryKey = 'id';
@@ -81,17 +81,17 @@ class Order extends Model
     public static function getDeliveryMethods()
     {
         return [
-            self::COURIER => trans('admin.courier'),
-            self::PICKUP => trans('admin.pickup'),
+            self::WITHSELF => trans('admin.withself'),
+            self::INSIDE => trans('admin.inside'),
         ];
     }
 
     public static function getDeliveryStatus()
     {
         return [
-            self::PICKUP_ISSUED => trans('admin.pickup_issued'),
-            self::COURIER_DELIVERED => trans('admin.courier_delivered'),
             self::ON_PROCESS => trans('admin.on_process'),
+            self::SUCCESS => trans('admin.success'),
+            self::CANCELED => trans('admin.canceled'),
         ];
     }
 
