@@ -69,6 +69,16 @@ class CategoryCrudController extends DefaultCrudController
                 'label' => trans('admin.name'),
             ],
             [
+                'name' => 'opening_hours',
+                'label' => trans('admin.opening_hours'),
+                'type' => 'table',
+                // 'entity_singular' => trans('admin.add'),
+                'columns' => [
+                    'opens' => trans('admin.opens'),
+                    'closes' => trans('admin.closes'),
+                ],
+            ],
+            [
                 'name' => 'status',
                 'label' => trans('admin.status'),
                 'type' => 'select_from_array',

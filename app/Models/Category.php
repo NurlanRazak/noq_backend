@@ -24,6 +24,9 @@ class Category extends Model implements StatusInterface
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $casts = [
+        'opening_hours' => 'array',
+    ];
 
     /*
     |--------------------------------------------------------------------------
