@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SuccessOrderSend;
 
 class Order extends Model
 {
@@ -44,7 +46,18 @@ class Order extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
+    public static function boot()
+    {
+        parent::boot();
+        static::updated(function ($order) {
+            if ($order->delivery_status == self::SUCCESS) {
+                $user = $order->user;
+                if ($user) {
+                    Mail::to($user->email)->send(new SuccessOrderSend($order));
+                }
+            }
+        });
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

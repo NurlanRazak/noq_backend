@@ -27,7 +27,7 @@ class OrderCrudController extends DefaultCrudController
                 'label' => trans('admin.user'),
                 'type' => 'select',
                 'entity' => 'user',
-                'attribute' => 'phone',
+                'attribute' => 'email',
             ],
             [
                 'name' => 'products',
@@ -107,7 +107,7 @@ class OrderCrudController extends DefaultCrudController
                 'label' => trans('admin.user'),
                 'type' => 'select2',
                 'entity' => 'user',
-                'attribute' => 'phone',
+                'attribute' => 'email',
                 'wrapper' => [
                     'class' => 'form-group col-sm-4',
                 ],
