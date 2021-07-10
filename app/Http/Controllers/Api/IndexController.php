@@ -10,6 +10,7 @@ use App\Models\Menu;
 use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\Product;
+use App\Models\Table;
 
 class IndexController extends Controller
 {
@@ -23,7 +24,7 @@ class IndexController extends Controller
             return $this->success($place);
         }
 
-        $places = Place::select('id', 'name', 'image', 'status')->active()->get();
+        $places = Place::select('id', 'name', 'image', 'status')->with('menus', 'tables')->active()->get();
 
         return $this->success($places);
     }
@@ -47,5 +48,12 @@ class IndexController extends Controller
         }])->orderBy('lft')->active()->get();
 
         return $this->success($categories);
+    }
+
+    public function getTables(Request $request)
+    {
+        $tables = Table::with('place')->get();
+
+        return $this->success($tables);
     }
 }

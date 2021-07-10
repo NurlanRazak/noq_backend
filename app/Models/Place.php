@@ -43,6 +43,11 @@ class Place extends Model implements StatusInterface
     {
         return $this->hasMany(Menu::class);
     }
+
+    public function tables()
+    {
+        return $this->hasMany(Table::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

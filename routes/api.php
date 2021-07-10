@@ -53,7 +53,7 @@ Route::get('place', 'IndexController@getPlaces');
 Route::get('menu/{placeId}', 'IndexController@getMenu');
 Route::get('categories/{menuId}', 'IndexController@getCategories');
 
-
+Route::get('table', 'IndexController@getTables');
 
 
 
