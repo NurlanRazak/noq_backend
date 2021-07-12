@@ -33,6 +33,9 @@ class IndexController extends Controller
     {
         $menu = Menu::where('place_id', $placeId)->firstOrFail();
         $categories = Category::where("menu_id", $menu->id)->get()->pluck('id');
+        if ($request->category_id) {
+            $categories = Category::where("menu_id", $menu->id)->where('id', $request->category_id)->get()->pluck('id');
+        }
         $subcategories = Subcategory::whereHas('categories', function ($query) use ($categories) {
             $query->where('category_id', $categories);
         })->get()->pluck('id');
