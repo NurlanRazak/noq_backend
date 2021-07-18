@@ -35,20 +35,32 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $loginData = $request->validate([
-           'email' => 'email|required',
-           'password' => 'required'
-       ]);
-       $user = User::where('email', $request->email)->first();
+            'email' => 'email|required',
+            'password' => 'required'
+        ]);
+		$user = User::where('email', $request->email)->first();
 
-       if (! $user || ! Hash::check($request->password, $user->password) || $user->email_verified_at == null) {
-           return $this->error('Oops something gone wrong', 422);
-       }
-       if (!auth()->attempt($loginData)) {
-           return $this->error('Oops something gone wrong', 422);
-       }
+		if (! $user || ! Hash::check($request->password, $user->password) || $user->email_verified_at == null) {
+			if ($user->email_verified_at == null) {
+				return response()->json([
+					'success' => false,
+					'message' => 'Подтвердите свой email'
+				], 422);
+			}
+			if (!$user) {
+				return response()->json([
+					'success' => false,
+					'message' => 'Пользователь не найден!'
+				], 422);
+			}
+			return $this->error('Oops something gone wrong', 422);
+		}
+        if (!auth()->attempt($loginData)) {
+            return $this->error('Oops something gone wrong', 422);
+        }
 
-       $accessToken = auth()->user()->createToken('API Token')->plainTextToken;
+        $accessToken = auth()->user()->createToken('API Token')->plainTextToken;
 
-       return $this->success(['user' => auth()->user(), 'access_token' => $accessToken]);
+        return $this->success(['user' => auth()->user(), 'access_token' => $accessToken]);
     }
 }
