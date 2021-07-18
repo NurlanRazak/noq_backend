@@ -18,6 +18,8 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
+     protected $guarded = ['id'];
+
     protected $fillable = [
         'name',
         'email',
@@ -47,10 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function place()
     {
         return $this->belongsTo(Place::class, 'place_id');
-    }
-
-    public function setPasswordAttribute($value) {
-        $this->attributes['password'] = \Hash::make($value);
     }
 
     public function getPasswordAttribute()

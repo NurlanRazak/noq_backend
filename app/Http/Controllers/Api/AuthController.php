@@ -10,6 +10,7 @@ use App\Models\VerificationToken;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendSmsJob;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -34,16 +35,20 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $loginData = $request->validate([
-            'email' => 'email|required',
-            'password' => 'required'
-        ]);
+           'email' => 'email|required',
+           'password' => 'required'
+       ]);
+       $user = User::where('email', $request->email)->first();
 
-        if (!auth()->attempt($loginData)) {
-            return $this->error('Oops something gone wrong', 422);
-        }
+       if (! $user || ! Hash::check($request->password, $user->password) || $user->email_verified_at == null) {
+           return $this->error('Oops something gone wrong', 422);
+       }
+       if (!auth()->attempt($loginData)) {
+           return $this->error('Oops something gone wrong', 422);
+       }
 
-        $accessToken = auth()->user()->createToken('API Token')->plainTextToken;
+       $accessToken = auth()->user()->createToken('API Token')->plainTextToken;
 
-        return $this->success(['user' => auth()->user(), 'access_token' => $accessToken]);
+       return $this->success(['user' => auth()->user(), 'access_token' => $accessToken]);
     }
 }
