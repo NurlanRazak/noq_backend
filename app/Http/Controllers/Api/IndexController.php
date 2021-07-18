@@ -59,4 +59,11 @@ class IndexController extends Controller
 
         return $this->success($tables);
     }
+
+    public function getTable(Request $request, $id)
+    {
+        $table = Table::whereId($id)->first();
+
+        return $this->success($table);
+    }
 }

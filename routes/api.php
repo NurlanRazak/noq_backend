@@ -54,7 +54,7 @@ Route::get('menu/{placeId}', 'IndexController@getMenu');
 Route::get('categories/{menuId}', 'IndexController@getCategories');
 
 Route::get('table', 'IndexController@getTables');
-
+Route::get('table/{id}', 'IndexController@getTable');
 
 
 Route::get('migrate', function () {
