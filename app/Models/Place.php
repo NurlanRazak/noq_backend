@@ -27,7 +27,9 @@ class Place extends Model implements StatusInterface
     // protected $hidden = [];
     // protected $dates = [];
     protected $appends = ['img'];
-
+    protected $casts = [
+        'opening_hours' => 'array',
+    ];
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
