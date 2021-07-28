@@ -54,8 +54,7 @@ Route::get('menu/{placeId}', 'IndexController@getMenu');
 Route::get('categories/{menuId}', 'IndexController@getCategories');
 
 Route::get('table', 'IndexController@getTables');
-
-
+Route::get('search', 'IndexController@search');
 
 Route::get('migrate', function () {
 	\Artisan::call('migrate');

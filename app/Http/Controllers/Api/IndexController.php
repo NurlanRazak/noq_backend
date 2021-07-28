@@ -59,4 +59,30 @@ class IndexController extends Controller
 
         return $this->success($tables);
     }
+
+    public function search(Request $request)
+    {
+        $q = $request->q;
+        if ($request->is_place == 1) {
+            $places = Place::where('name', 'like', "%{$q}%")->get();
+
+            return $this->success($places);
+        }
+
+        if ($request->place_id) {
+            $menu = Menu::where('place_id', $request->place_id)->get();
+
+			$categories = Category::whereIn("menu_id", $menu->pluck('id')->toArray())->get()->pluck('id');
+
+            $subcategories = Subcategory::whereHas('categories', function ($query) use ($categories) {
+                $query->whereIn('category_id', $categories);
+            })->get()->pluck('id');
+
+            $products = Product::whereIn("subcategory_id", $subcategories)->where('name', 'like', "%{$q}%")->get();
+
+            return $this->success($products);
+        }
+
+        return $this->error("Мы не смогли найти то что вы искали:(");
+    }
 }
