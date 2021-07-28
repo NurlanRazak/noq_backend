@@ -19,12 +19,12 @@ class IndexController extends Controller
     public function getPlaces(Request $request)
     {
         if ($request->place_id) {
-            $place = Place::findOrFail($request->place_id);
+            $place = Place::with('menus', 'tables')->findOrFail($request->place_id);
 
             return $this->success($place);
         }
 
-        $places = Place::select('id', 'name', 'image', 'status')->with('menus', 'tables')->active()->get();
+        $places = Place::with('menus', 'tables')->active()->get();
 
         return $this->success($places);
     }
