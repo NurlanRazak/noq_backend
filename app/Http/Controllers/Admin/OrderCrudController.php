@@ -16,6 +16,99 @@ class OrderCrudController extends DefaultCrudController
         $user = backpack_user();
         if ($user->place_id) {
             $this->crud->addClause("where", "place_id", $user->place_id);
+            $orders = Order::where('place_id', $user->place_id)->get();
+            $all_orders_cnt = $orders->count();
+            $today_orders_cnt = $orders->where('created_at', '>=', date('Y-m-d').' 00:00:00')->count();
+            $all_revenue = $orders->where('payment_status', 1)->sum('total_amount');
+            $day_revenue = $orders->where('payment_status', 1)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->sum('total_amount');
+            $cash_cnt = $orders->where('payment_type', 0)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->count();
+            $card_cnt = $orders->where('payment_type', 1)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->count();
+
+            $this->data['widgets']['before_content'][] = [ 'type' => 'div', 'class' => 'row', 'content' => [
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Всего заказов',
+                    'description' => "{$all_orders_cnt}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Заказы за день',
+                    'description' => "{$today_orders_cnt}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Доход',
+                    'description' => "{$all_revenue}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Доход за день',
+                    'description' => "{$day_revenue}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Оплатили картой',
+                    'description' => "{$card_cnt}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Оплатили наличкой',
+                    'description' => "{$cash_cnt}",
+                ],
+            ]];
+        } else {
+            $orders = Order::all();
+            $all_orders_cnt = $orders->count();
+            $today_orders_cnt = $orders->where('created_at', '>=', date('Y-m-d').' 00:00:00')->count();
+            $all_revenue = $orders->where('payment_status', 1)->sum('total_amount');
+            $day_revenue = $orders->where('payment_status', 1)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->sum('total_amount');
+            $cash_cnt = $orders->where('payment_type', 0)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->count();
+            $card_cnt = $orders->where('payment_type', 1)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->count();
+
+            $this->data['widgets']['before_content'][] = [ 'type' => 'div', 'class' => 'row', 'content' => [
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Всего заказов',
+                    'description' => "{$all_orders_cnt}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Заказы за день',
+                    'description' => "{$today_orders_cnt}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Доход',
+                    'description' => "{$all_revenue}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Доход за день',
+                    'description' => "{$day_revenue}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Оплатили картой',
+                    'description' => "{$card_cnt}",
+                ],
+                [
+                    'type'        => 'progress_white',
+                    'class'       => 'card mb-2',
+                    'value'       => 'Оплатили наличкой',
+                    'description' => "{$cash_cnt}",
+                ],
+            ]];
         }
     }
 
