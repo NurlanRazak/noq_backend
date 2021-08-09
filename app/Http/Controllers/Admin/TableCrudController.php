@@ -36,6 +36,14 @@ class TableCrudController extends DefaultCrudController
                 'name' => 'code',
                 'label' => trans('admin.code'),
             ],
+            [
+                'name' => 'qr',
+                'label' => 'QR',
+                'type' => 'image',
+                'prefix' => 'uploads/',
+                'width' => '150px',
+                'height' => '150px',
+            ],
         ]);
     }
 
@@ -60,6 +68,19 @@ class TableCrudController extends DefaultCrudController
                 'name' => 'code',
                 'label' => trans('admin.code'),
                 'type' => 'text',
+            ],
+        ]);
+    }
+
+    protected function setupUpdateOperation()
+    {
+        parent::setupUpdateOperation();
+        CRUD::addFields([
+            [
+                'name' => 'qr',
+                'label' => 'QR',
+                'type' => 'image',
+                'disk' => 'uploads'
             ],
         ]);
     }
