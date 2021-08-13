@@ -88,7 +88,7 @@ class IndexController extends Controller
 
     public function getMenuByQr(Request $request, $code)
     {
-        $place = Place::whereHas('tables', function (Builder $query) {
+        $place = Place::whereHas('tables', function ($query) use ($code) {
                     $query->where('code', $code);
                 })->firstOrFail();
 
