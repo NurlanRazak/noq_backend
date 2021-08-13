@@ -85,4 +85,19 @@ class IndexController extends Controller
 
         return $this->error("Мы не смогли найти то что вы искали:(");
     }
+
+    public function getMenuByQr(Request $request, $code)
+    {
+        $place = Place::whereHas('tables', function (Builder $query) {
+                    $query->where('code', $code);
+                })->firstOrFail();
+
+        $menus = Menu::where('place_id', $place->id)->with(['categories' => function ($query) {
+            $query->with(['subcategories' => function ($subcategory) {
+                $subcategory->with('products');
+            }]);
+        }])->get();
+
+        return $this->success($menus);
+    }
 }

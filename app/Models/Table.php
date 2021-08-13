@@ -30,7 +30,7 @@ class Table extends Model
     ];
     // protected $hidden = [];
     // protected $dates = [];
-
+    protected $appends = ['qr_image'];
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -75,7 +75,10 @@ class Table extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
+    public function getQrImageAttribute()
+    {
+        return url('/uploads/'.$this->qr);
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
