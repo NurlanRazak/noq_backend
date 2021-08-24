@@ -44,6 +44,32 @@ class IndexController extends Controller
         return $this->success($products);
     }
 
+    public function getMenuOtherWay(Request $request, $placeId)
+    {
+        $menus = Menu::where('place_id', $placeId)->with(['categories' => function ($query) {
+            $query->with(['subcategories' => function ($subcategory) {
+                $subcategory->with('products');
+            }]);
+        }])->get();
+
+        return $this->success($menus);
+    }
+
+    public function getMenuByQr(Request $request, $code)
+    {
+        $place = Place::whereHas('tables', function ($query) use ($code) {
+                    $query->where('code', $code);
+                })->firstOrFail();
+
+        $menus = Menu::where('place_id', $place->id)->with(['categories' => function ($query) {
+            $query->with(['subcategories' => function ($subcategory) {
+                $subcategory->with('products');
+            }]);
+        }])->get();
+
+        return $this->success($menus);
+    }
+
     public function getCategories(Request $request, $menuId)
     {
         $categories = Category::select('id', 'menu_id', 'name')->where("menu_id", $menuId)->with(['subcategories' => function ($query) {
@@ -84,20 +110,5 @@ class IndexController extends Controller
         }
 
         return $this->error("Мы не смогли найти то что вы искали:(");
-    }
-
-    public function getMenuByQr(Request $request, $code)
-    {
-        $place = Place::whereHas('tables', function ($query) use ($code) {
-                    $query->where('code', $code);
-                })->firstOrFail();
-
-        $menus = Menu::where('place_id', $place->id)->with(['categories' => function ($query) {
-            $query->with(['subcategories' => function ($subcategory) {
-                $subcategory->with('products');
-            }]);
-        }])->get();
-
-        return $this->success($menus);
     }
 }

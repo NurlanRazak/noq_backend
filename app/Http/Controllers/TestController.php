@@ -9,6 +9,9 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd('here');
+
+
         return view('cloudpayments');
     }
 

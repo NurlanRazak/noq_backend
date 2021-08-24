@@ -51,6 +51,7 @@ Route::post('/email/verify/resend', function (Request $request) {
 Route::get('banners', 'BannerController@getBanners');
 Route::get('place', 'IndexController@getPlaces');
 Route::get('menu/{placeId}', 'IndexController@getMenu');
+Route::get('v1/menu/{placeId}', 'IndexController@getMenuOtherWay');
 Route::get('table/menu/{code}', 'IndexController@getMenuByQr');
 Route::get('categories/{menuId}', 'IndexController@getCategories');
 
