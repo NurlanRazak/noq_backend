@@ -27,6 +27,11 @@ class TestController extends Controller
                 'status' => 1,
             ]);
 
+            \DB::table('category_subcategory')->create([
+                'category_id' => 8,
+                'subcategory_id' => $subcategory->id,
+            ]);
+
             foreach ($prod_cats as $rel) {
                 if ($rel->category_id == $category->category_id) {
                     foreach($products as $product) {
@@ -34,7 +39,7 @@ class TestController extends Controller
                             \App\Models\Product::create([
                                 'subcategory_id' => $subcategory->id,
                                 'name' => $product->menu_name,
-                                'description' => $product->description,
+                                'description' => $product->menu_description,
                                 'price' => floatval($product->menu_price),
                                 'quantity' => $product->stock_qty,
                                 'status' => 1,
@@ -44,6 +49,7 @@ class TestController extends Controller
                 }
             }
         }
+        dd('ok');
 
         return view('cloudpayments');
     }
