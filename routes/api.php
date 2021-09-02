@@ -29,6 +29,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/order/create', 'OrderController@createNewOrder');
     Route::get('/order/list', 'OrderController@orderList');
     Route::get('/order/{id?}', 'OrderController@orderById');
+
+    Route::post('booking', 'UserController@saveBooking');
+    Route::get('user/booking', 'UserController@getUserBookings');
 });
 
 
@@ -57,6 +60,8 @@ Route::get('categories/{menuId}', 'IndexController@getCategories');
 
 Route::get('table', 'IndexController@getTables');
 Route::get('search', 'IndexController@search');
+
+Route::get('booking/{placeId?}', 'IndexController@getBookings');
 
 Route::get('migrate', function () {
 	\Artisan::call('migrate');

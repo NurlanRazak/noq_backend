@@ -6,9 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\UserBankCard;
 use App\Services\Payment\CloudPayment\Model\Required3DS;
+use App\Models\BookingList;
 
 class UserController extends Controller
 {
+
+    public function saveBooking(Request $request)
+    {
+        $bookingList = BookingList::create([
+            'user_id' => $request->user()->id,
+            'terrace' => $request->terrace,
+            'people' => $request->people,
+            'at_time' => $request->at_time,
+            'status' => 1,
+        ]);
+
+        return $bookingList;
+    }
+
+    public function getUserBookings(Request $request)
+    {
+        return BookingList::where('user_id', $request->user()->id)->active()->get();
+    }
 
     public function getUserBankCard(Request $request)
     {

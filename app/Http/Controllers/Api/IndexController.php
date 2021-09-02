@@ -11,10 +11,24 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\Product;
 use App\Models\Table;
+use App\Models\Booking;
 
 class IndexController extends Controller
 {
     use ApiResponser;
+
+    public function getBookings(Request $request, $place_id = null)
+    {
+        if ($place_id) {
+            $bookings = Booking::where('place_id', $place_id)->active()->get();
+
+            return $this->success($bookings);
+        }
+
+        $bookings = Booking::active()->get();
+
+        return $this->success($bookings);
+    }
 
     public function getPlaces(Request $request)
     {
