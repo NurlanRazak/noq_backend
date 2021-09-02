@@ -42,4 +42,5 @@
 
     <li class='nav-item'><a class='nav-link' href='{{ backpack_url('user') }}'><i class='nav-icon la la-users'></i> {{ trans_choice('admin.users', 2) }}</a></li>
 
+    <li class='nav-item'><a class='nav-link' href='{{ backpack_url('booking') }}'><i class='nav-icon la la-bookmark'></i> {{ trans_choice('admin.bookings', 2) }}</a></li>    
 @endif
