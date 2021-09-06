@@ -60,13 +60,14 @@ class IndexController extends Controller
 
     public function getMenuOtherWay(Request $request, $placeId)
     {
-        $menus = Menu::where('place_id', $placeId)->with(['categories' => function ($query) {
-            $query->with(['subcategories' => function ($subcategory) {
+        $menus = Menu::where('place_id', $placeId)->first();
+        if ($menus) {
+            $data = $menus->categories()->with(['subcategories' => function ($subcategory) {
                 $subcategory->with('products');
-            }]);
-        }])->get();
+            }])->get();
+        }
 
-        return $this->success($menus);
+        return $this->success($data);
     }
 
     public function getMenuByQr(Request $request, $code)

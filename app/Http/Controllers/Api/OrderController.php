@@ -38,6 +38,7 @@ class OrderController extends Controller
         $userId = $request->user()->id;
 
         $orders = Order::where('user_id', $userId)
+			->with('table')
 			->latest()
             ->get();
 
