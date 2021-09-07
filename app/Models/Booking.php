@@ -28,6 +28,8 @@ class Booking extends Model implements StatusInterface
         'available_times' => 'array',
     ];
 
+	public $appends = ['current_available_times'];
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -61,6 +63,18 @@ class Booking extends Model implements StatusInterface
             self::NO => trans('admin.no'),
         ];
     }
+
+	public function getCurrentAvailableTimesAttribute()
+	{
+		$times = json_decode($this->attributes['available_times']);
+		$available_times = [];
+		foreach($times as $time) {
+			if (time() <= strtotime($time->time)) {
+				$available_times[] = $time;
+			}
+		}
+		return $available_times;
+	}
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
