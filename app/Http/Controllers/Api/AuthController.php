@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendSmsJob;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\TwoFactorCode;
 
 class AuthController extends Controller
 {
@@ -34,7 +35,7 @@ class AuthController extends Controller
 
         $user->notify(new TwoFactorCode());
 
-        return $this->success($user);
+        return $this->success($user->email);
     }
 
     public function login(Request $request)

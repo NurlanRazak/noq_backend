@@ -40,9 +40,9 @@ Route::post('auth/register', 'AuthController@register');
 Route::get('verify/phone', 'AuthController@verifyPhone');
 
 // Verify email
-Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-    ->middleware(['signed', 'throttle:6,1'])
-    ->name('verification.verify');
+Route::get('/email/verify', [VerifyEmailController::class, 'verifyEmail'])->middleware(['throttle:6,1']);
+// Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+//     ->name('verification.verify');
 
 // Resend link to verify email
 Route::post('/email/verify/resend', function (Request $request) {
