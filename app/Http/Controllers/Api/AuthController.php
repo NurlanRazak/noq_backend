@@ -27,7 +27,12 @@ class AuthController extends Controller
 
         $user = User::create($validatedData);
 
-        event(new Registered($user));
+        $this->timestamps = false;
+        $user->two_factor_code = rand(100000, 999999);
+        $user->two_factor_expires_at = now()->addMinutes(10);
+        $user->save();
+
+        $user->notify(new TwoFactorCode());
 
         return $this->success($user);
     }

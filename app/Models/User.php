@@ -25,6 +25,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'place_id',
+        'two_factor_code',
+        'two_factor_expires_at',
     ];
 
     /**
@@ -35,6 +37,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $dates = [
+        'updated_at',
+        'created_at',
+        'deleted_at',
+        'email_verified_at',
+        'two_factor_expires_at',
     ];
 
     /**
@@ -54,5 +64,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getPasswordAttribute()
     {
         return $this->attributes['password'];
+    }
+
+    public function resetTwoFactorCode()
+    {
+        $this->timestamps = false;
+        $this->two_factor_code = null;
+        $this->two_factor_expires_at = null;
+        $this->save();
     }
 }
