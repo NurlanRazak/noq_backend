@@ -37,7 +37,7 @@ Route::middleware('auth:api')->group(function () {
 
 Route::post('auth/login', 'AuthController@login');
 Route::post('auth/register', 'AuthController@register');
-Route::get('verify/phone', 'AuthController@verifyPhone');
+Route::post('verify/phone', 'AuthController@verifyPhone');
 
 // Verify email
 Route::get('/email/verify', [VerifyEmailController::class, 'verifyEmail'])->middleware(['throttle:6,1']);
