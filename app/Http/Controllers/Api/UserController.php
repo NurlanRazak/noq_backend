@@ -4,12 +4,41 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\UserBankCard;
 use App\Services\Payment\CloudPayment\Model\Required3DS;
+use App\Traits\ApiResponser;
+use App\Models\UserBankCard;
 use App\Models\BookingList;
+use App\Models\User;
 
 class UserController extends Controller
 {
+    use ApiResponser;
+
+    public function updateUserInfo(Request $request)
+    {
+        $user = User::where('id', $request->user()->id)->update([
+            'name' => $request->name,
+        ]);
+        $user = User::where('id', $request->user()->id)->first();
+
+        return $this->success($user);
+    }
+
+    public function updateUserImage(Request $request)
+    {
+        $user = User::where('id', $request->user()->id)->first();
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $timestamp = str_replace([' ', ':'], '-', \Carbon\Carbon::now()->toDateTimeString());
+            $name = $timestamp.'-'.$user->id;
+            $user->image = $name;
+            $file->move(public_path().'/uploads/users/', $name);
+            $user->save();
+        }
+
+        return $this->success($user);
+    }
 
     public function saveBooking(Request $request)
     {

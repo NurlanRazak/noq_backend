@@ -32,6 +32,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('booking', 'UserController@saveBooking');
     Route::get('user/booking', 'UserController@getUserBookings');
+
+    Route::post('user/update', 'UserController@updateUserInfo');
+    Route::post('user/image/update', 'UserController@updateUserImage');
 });
 
 
