@@ -36,7 +36,11 @@ class AuthController extends Controller
 
         $user->notify(new TwoFactorCode());
 
-        return $this->success($user->email);
+        return response()->json([
+            'success' => true,
+            'message' => 'Registration went successfully',
+            'data' => null,
+        ], 200);
     }
 
     public function login(Request $request)
