@@ -25,10 +25,15 @@ class OrderController extends Controller
             'place_id' => $data['place_id'],
             'table_id' => $data['table_id'] ?? null,
         ]);
+        if ($data['card_id']) {
+            $card = UserBankCard::where('user_id', $user->id)->where('id', $data['card_id'])->firstOrFail();
 
-        $card = UserBankCard::where('user_id', $user->id)->where('id', $data['card_id'])->firstOrFail();
-
-        $charging = \CloudPayment::chargeToken($card, $order->total_amount);
+            if ($card) {
+    			$order->payment_type = 1;
+    			$order->save();
+    		}
+            $charging = \CloudPayment::chargeToken($card, $order->total_amount);
+        }
 
         return $order;
     }
