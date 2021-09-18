@@ -51,13 +51,13 @@ class AuthController extends Controller
 			if ($user->email_verified_at == null) {
 				return response()->json([
 					'success' => false,
-					'message' => 'Подтвердите свой email'
+					'message' => 'Confirm your email!'
 				], 422);
 			}
 			if (!$user) {
 				return response()->json([
 					'success' => false,
-					'message' => 'Пользователь не найден!'
+					'message' => 'Confirm your email!'
 				], 422);
 			}
 			return $this->error('Oops something gone wrong', 422);
