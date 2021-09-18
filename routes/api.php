@@ -37,10 +37,10 @@ Route::middleware('auth:api')->group(function () {
 
 Route::post('auth/login', 'AuthController@login');
 Route::post('auth/register', 'AuthController@register');
-Route::post('verify/phone', 'AuthController@verifyPhone');
+Route::get('verify/phone', 'AuthController@verifyPhone');
 
 // Verify email
-Route::get('/email/verify', [VerifyEmailController::class, 'verifyEmail'])->middleware(['throttle:6,1']);
+Route::post('/email/verify', [VerifyEmailController::class, 'verifyEmail'])->middleware(['throttle:6,1']);
 // Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
 //     ->name('verification.verify');
 
