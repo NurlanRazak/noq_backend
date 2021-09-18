@@ -20,13 +20,13 @@ class VerifyEmailController extends Controller
                 $user->resetTwoFactorCode();
 				$user->markEmailAsVerified();
                 return response()->json([
-                    'message' => 'Ваш email успешно активирован',
+                    'message' => 'Your email has been successfully activated',
                     'success' => true,
                 ]);
 
             }
             return response()->json([
-                'message' => 'Введенный вами двухфакторный код не соответствует',
+                'message' => 'The two-factor code you entered does not match',
                 'success' => false,
             ]);
         }
