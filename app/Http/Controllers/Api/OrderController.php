@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\UserBankCard;
+use App\Traits\ApiResponser;
 
 class OrderController extends Controller
 {
+    use ApiResponser;
 
     public function createNewOrder(Request $request)
     {
@@ -25,7 +27,7 @@ class OrderController extends Controller
             'place_id' => $data['place_id'],
             'table_id' => $data['table_id'] ?? null,
         ]);
-        if (in_array($data['card_id'])) {
+        if (isset($data['card_id'])) {
             $card = UserBankCard::where('user_id', $user->id)->where('id', $data['card_id'])->firstOrFail();
 
             if ($card) {
@@ -33,9 +35,11 @@ class OrderController extends Controller
     			$order->save();
     		}
             $charging = \CloudPayment::chargeToken($card, $order->total_amount);
+
+            return $this->success($order, 'Payment done!');
         }
 
-        return $order;
+        return $this->success($order, 'Order sent!');
     }
 
     public function orderList(Request $request)
