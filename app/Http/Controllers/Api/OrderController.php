@@ -25,7 +25,7 @@ class OrderController extends Controller
             'place_id' => $data['place_id'],
             'table_id' => $data['table_id'] ?? null,
         ]);
-        if ($data['card_id']) {
+        if (in_array($data['card_id'])) {
             $card = UserBankCard::where('user_id', $user->id)->where('id', $data['card_id'])->firstOrFail();
 
             if ($card) {
