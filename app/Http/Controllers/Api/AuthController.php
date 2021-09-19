@@ -51,14 +51,15 @@ class AuthController extends Controller
         ]);
 		$user = User::where('email', $request->email)->first();
 
-		if (! $user || ! Hash::check($request->password, $user->password) || $user->email_verified_at == null) {
+        if (!$user) {
+            return response()->json([
+                        'success' => false,
+                        'message' => 'User not found!'
+                    ], 422);
+        }
+
+		if (! Hash::check($request->password, $user->password) || $user->email_verified_at == null) {
 			if ($user->email_verified_at == null) {
-				return response()->json([
-					'success' => false,
-					'message' => 'Confirm your email!'
-				], 422);
-			}
-			if (!$user) {
 				return response()->json([
 					'success' => false,
 					'message' => 'Confirm your email!'
