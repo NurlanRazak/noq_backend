@@ -58,7 +58,22 @@ class AuthController extends Controller
                     ], 422);
         }
 
-		if (! Hash::check($request->password, $user->password) || $user->email_verified_at == null) {
+        if (! Hash::check($request->password, $user->password)) {
+            return response()->json([
+                        'success' => false,
+                        'message' => 'Password does not match!'
+                    ], 422);
+        }
+
+		if ($user->email_verified_at == null) {
+
+            $user->timestamps = false;
+            $user->two_factor_code = rand(100000, 999999);
+            $user->two_factor_expires_at = now()->addMinutes(10);
+            $user->save();
+
+            $user->notify(new TwoFactorCode());
+
 			if ($user->email_verified_at == null) {
 				return response()->json([
 					'success' => false,
