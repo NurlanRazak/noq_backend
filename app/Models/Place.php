@@ -50,6 +50,11 @@ class Place extends Model implements StatusInterface
     {
         return $this->hasMany(Table::class);
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

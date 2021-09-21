@@ -43,6 +43,19 @@ class IndexController extends Controller
         return $this->success($places);
     }
 
+    public function getPlacesByCityId(Request $request, $cityId)
+    {
+        if ($request->place_id) {
+            $place = Place::with('menus', 'tables')->findOrFail($request->place_id);
+
+            return $this->success($place);
+        }
+
+        $places = Place::with('menus', 'tables')->where('city_id', $cityId)->active()->get();
+
+        return $this->success($places);
+    }
+
     public function getMenu(Request $request, $placeId)
     {
         $menu = Menu::where('place_id', $placeId)->firstOrFail();

@@ -56,6 +56,7 @@ Route::post('/email/verify/resend', function (Request $request) {
 //main getters for mobile app
 Route::get('banners', 'BannerController@getBanners');
 Route::get('place', 'IndexController@getPlaces');
+Route::get('place/{cityId}', 'IndexController@getPlacesByCityId');
 Route::get('menu/{placeId}', 'IndexController@getMenu');
 Route::get('v1/menu/{placeId}', 'IndexController@getMenuOtherWay');
 Route::get('table/menu/{code}', 'IndexController@getMenuByQr');
