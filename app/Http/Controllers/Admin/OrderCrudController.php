@@ -143,6 +143,10 @@ class OrderCrudController extends DefaultCrudController
                 'suffix' => ' тг',
             ],
             [
+                'name' => 'comment',
+                'label' => 'Комментарий',
+            ],
+            [
                 'name' => 'payment_type',
                 'label' => trans('admin.payment_type'),
                 'type' => 'select_from_array',
@@ -276,6 +280,10 @@ class OrderCrudController extends DefaultCrudController
                 'wrapper' => [
                     'class' => 'form-group col-sm-4',
                 ],
+            ],
+            [
+                'name' => 'comment',
+                'label' => 'Комментарий',
             ],
         ]);
     }
