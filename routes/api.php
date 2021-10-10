@@ -67,6 +67,8 @@ Route::get('search', 'IndexController@search');
 
 Route::get('booking/{placeId?}', 'IndexController@getBookings');
 
+Route::get('city', 'IndexController@getCities');
+
 Route::get('migrate', function () {
 	\Artisan::call('migrate');
 });

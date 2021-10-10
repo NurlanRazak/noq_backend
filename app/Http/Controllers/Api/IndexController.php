@@ -12,10 +12,18 @@ use App\Models\Subcategory;
 use App\Models\Product;
 use App\Models\Table;
 use App\Models\Booking;
+use App\Models\City;
 
 class IndexController extends Controller
 {
     use ApiResponser;
+
+    public function getCities(Request $request)
+    {
+        $cities = City::active()->get();
+
+        return $this->success($cities);
+    }
 
     public function getBookings(Request $request, $place_id = null)
     {
