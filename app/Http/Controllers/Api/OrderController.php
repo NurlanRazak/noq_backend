@@ -26,7 +26,10 @@ class OrderController extends Controller
             'delivery_method' => $data['delivery_method'],
             'place_id' => $data['place_id'],
             'table_id' => $data['table_id'] ?? null,
-            'comment' => $data['comment'] ?? null
+            'comment' => $data['comment'] ?? null,
+            'terrace' => $data['terrace'] ?? null,
+            'people' => $data['people'] ?? null,
+            'at_time' => $data['at_time'] ?? null,
         ]);
         if (isset($data['card_id'])) {
             $card = UserBankCard::where('user_id', $user->id)->where('id', $data['card_id'])->firstOrFail();
