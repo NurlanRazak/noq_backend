@@ -64,4 +64,19 @@ class OrderController extends Controller
 
         return $order;
     }
+
+    public function cancelOrder(Request $request)
+    {
+        $order = Order::where('id', $request->order_id)->first();
+
+        if ($order && $order->delivery_status != Order::CANCELED) {
+            $order->update([
+                'delivery_status' => Order::CANCELED,
+            ]);
+
+            $this->success($order, 'Order canceled!');
+        }
+
+        $this->success($order, 'Order already canceled!');
+    }
 }
