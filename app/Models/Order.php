@@ -24,7 +24,7 @@ class Order extends Model
     const INSIDE = 0;
 
     const SUCCESS = 2;
-    const CANCELED = 3;
+    const CANCELED = 4;
     const ON_PROCESS = 1;
 
 
@@ -107,7 +107,7 @@ class Order extends Model
             self::NEW_ORDER => trans('admin.new_order'),
             self::APPROVED => trans('admin.approved'),
             self::IN_PROCESS => trans('admin.in_process'),
-            self::CANCELED => trans('admin.canceled'),   
+            self::CANCELED => trans('admin.canceled'),
         ];
     }
 
