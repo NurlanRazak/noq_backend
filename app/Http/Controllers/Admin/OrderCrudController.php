@@ -143,6 +143,12 @@ class OrderCrudController extends DefaultCrudController
                 'suffix' => ' тг',
             ],
             [
+                'name' => 'status',
+                'label' => trans('admin.status'),
+                'type' => 'select_from_array',
+                'options' => Order::getStatusOptions(),
+            ],
+            [
                 'name' => 'payment_type',
                 'label' => trans('admin.payment_type'),
                 'type' => 'select_from_array',
@@ -232,6 +238,12 @@ class OrderCrudController extends DefaultCrudController
                     'quantity'  => trans('admin.quantity'),
                     'price' => trans('admin.price'),
                 ],
+            ],
+            [
+                'name' => 'status',
+                'label' => trans('admin.status'),
+                'type' => 'select2_from_array',
+                'options' => Order::getStatusOptions(),
             ],
             [
                 'name' => 'total_amount',

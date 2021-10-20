@@ -27,6 +27,12 @@ class Order extends Model
     const CANCELED = 3;
     const ON_PROCESS = 1;
 
+
+    const NEW_ORDER = 1;
+    const APPROVED = 2;
+    const IN_PROCESS = 3;
+    const CANCELED = 4;
+
     const CASH=0;
     const CARD=1;
 
@@ -93,6 +99,16 @@ class Order extends Model
         return [
             self::NOT_PAID => trans('admin.not_paid'),
             self::PAID => trans('admin.paid'),
+        ];
+    }
+
+    public static function getStatusOptions()
+    {
+        return [
+            self::NEW_ORDER => trans('admin.new_order'),
+            self::APPROVED => trans('admin.approved'),
+            self::IN_PROCESS => trans('admin.in_process'),
+            self::CANCELED => trans('admin.canceled'),
         ];
     }
 
