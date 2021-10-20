@@ -31,7 +31,6 @@ class Order extends Model
     const NEW_ORDER = 1;
     const APPROVED = 2;
     const IN_PROCESS = 3;
-    const CANCELED = 4;
 
     const CASH=0;
     const CARD=1;
@@ -108,7 +107,7 @@ class Order extends Model
             self::NEW_ORDER => trans('admin.new_order'),
             self::APPROVED => trans('admin.approved'),
             self::IN_PROCESS => trans('admin.in_process'),
-            self::CANCELED => trans('admin.canceled'),
+            self::CANCELED => trans('admin.canceled'),   
         ];
     }
 

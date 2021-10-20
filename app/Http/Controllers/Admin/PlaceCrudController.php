@@ -23,6 +23,13 @@ class PlaceCrudController extends DefaultCrudController
                 'label' => trans('admin.name'),
             ],
             [
+                'name' => 'city_id',
+                'label' => trans('admin.city'),
+                'type' => 'select',
+                'entity' => 'city',
+                'attribute' => 'name',
+            ],
+            [
                 'name' => 'image',
                 'label' => trans('admin.image'),
                 'type' => 'image',
@@ -49,6 +56,13 @@ class PlaceCrudController extends DefaultCrudController
             [
                 'name' => 'name',
                 'label' => trans('admin.name'),
+            ],
+            [
+                'name' => 'city_id',
+                'label' => trans('admin.city'),
+                'type' => 'select2',
+                'entity' => 'city',
+                'attribute' => 'name',
             ],
             [
                 'name' => 'image',

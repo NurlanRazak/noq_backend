@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendSmsJob;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\TwoFactorCode;
 
 class AuthController extends Controller
 {
@@ -20,16 +21,26 @@ class AuthController extends Controller
     {
         $validatedData = $request->validate([
             'email' => 'email|required|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'name' => 'required',
         ]);
 
         $validatedData['password'] = bcrypt($request->password);
 
         $user = User::create($validatedData);
 
-        event(new Registered($user));
+        $this->timestamps = false;
+        $user->two_factor_code = rand(100000, 999999);
+        $user->two_factor_expires_at = now()->addMinutes(10);
+        $user->save();
 
-        return $this->success($user);
+        $user->notify(new TwoFactorCode());
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Registration went successfully',
+            'data' => null,
+        ], 200);
     }
 
     public function login(Request $request)
@@ -40,17 +51,33 @@ class AuthController extends Controller
         ]);
 		$user = User::where('email', $request->email)->first();
 
-		if (! $user || ! Hash::check($request->password, $user->password) || $user->email_verified_at == null) {
+        if (!$user) {
+            return response()->json([
+                        'success' => false,
+                        'message' => 'User not found!'
+                    ], 422);
+        }
+
+        if (! Hash::check($request->password, $user->password)) {
+            return response()->json([
+                        'success' => false,
+                        'message' => 'Password does not match!'
+                    ], 422);
+        }
+
+		if ($user->email_verified_at == null) {
+
+            $user->timestamps = false;
+            $user->two_factor_code = rand(100000, 999999);
+            $user->two_factor_expires_at = now()->addMinutes(10);
+            $user->save();
+
+            $user->notify(new TwoFactorCode());
+
 			if ($user->email_verified_at == null) {
 				return response()->json([
 					'success' => false,
-					'message' => 'Подтвердите свой email'
-				], 422);
-			}
-			if (!$user) {
-				return response()->json([
-					'success' => false,
-					'message' => 'Пользователь не найден!'
+					'message' => 'Confirm your email!'
 				], 422);
 			}
 			return $this->error('Oops something gone wrong', 422);

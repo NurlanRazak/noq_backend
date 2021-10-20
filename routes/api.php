@@ -29,6 +29,13 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/order/create', 'OrderController@createNewOrder');
     Route::get('/order/list', 'OrderController@orderList');
     Route::get('/order/{id?}', 'OrderController@orderById');
+    Route::post('cancel/order', 'OrderController@cancelOrder');
+
+    Route::post('booking', 'UserController@saveBooking');
+    Route::get('user/booking', 'UserController@getUserBookings');
+
+    Route::post('user/update', 'UserController@updateUserInfo');
+    Route::post('user/image/update', 'UserController@updateUserImage');
 });
 
 
@@ -37,9 +44,9 @@ Route::post('auth/register', 'AuthController@register');
 Route::get('verify/phone', 'AuthController@verifyPhone');
 
 // Verify email
-Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-    ->middleware(['signed', 'throttle:6,1'])
-    ->name('verification.verify');
+Route::post('/email/verify', [VerifyEmailController::class, 'verifyEmail'])->middleware(['throttle:6,1']);
+// Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+//     ->name('verification.verify');
 
 // Resend link to verify email
 Route::post('/email/verify/resend', function (Request $request) {
@@ -50,6 +57,7 @@ Route::post('/email/verify/resend', function (Request $request) {
 //main getters for mobile app
 Route::get('banners', 'BannerController@getBanners');
 Route::get('place', 'IndexController@getPlaces');
+Route::get('place/{cityId}', 'IndexController@getPlacesByCityId');
 Route::get('menu/{placeId}', 'IndexController@getMenu');
 Route::get('v1/menu/{placeId}', 'IndexController@getMenuOtherWay');
 Route::get('table/menu/{code}', 'IndexController@getMenuByQr');
@@ -57,6 +65,10 @@ Route::get('categories/{menuId}', 'IndexController@getCategories');
 
 Route::get('table', 'IndexController@getTables');
 Route::get('search', 'IndexController@search');
+
+Route::get('booking/{placeId?}', 'IndexController@getBookings');
+
+Route::get('city', 'IndexController@getCities');
 
 Route::get('migrate', function () {
 	\Artisan::call('migrate');

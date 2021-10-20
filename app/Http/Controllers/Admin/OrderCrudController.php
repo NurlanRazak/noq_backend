@@ -143,6 +143,10 @@ class OrderCrudController extends DefaultCrudController
                 'suffix' => ' тг',
             ],
             [
+                'name' => 'comment',
+                'label' => 'Комментарий',
+            ],
+            [
                 'name' => 'status',
                 'label' => trans('admin.status'),
                 'type' => 'select_from_array',
@@ -195,6 +199,12 @@ class OrderCrudController extends DefaultCrudController
 
         CRUD::addFields([
             [
+                'name' => 'status',
+                'label' => trans('admin.status'),
+                'type' => 'select2_from_array',
+                'options' => Order::getStatusOptions(),
+            ],
+            [
                 'name' => 'place_id',
                 'label' => trans('admin.place'),
                 'type' => 'select2',
@@ -240,12 +250,6 @@ class OrderCrudController extends DefaultCrudController
                 ],
             ],
             [
-                'name' => 'status',
-                'label' => trans('admin.status'),
-                'type' => 'select2_from_array',
-                'options' => Order::getStatusOptions(),
-            ],
-            [
                 'name' => 'total_amount',
                 'label' => trans('admin.total_amount'),
                 'suffix' => ' тг',
@@ -288,6 +292,10 @@ class OrderCrudController extends DefaultCrudController
                 'wrapper' => [
                     'class' => 'form-group col-sm-4',
                 ],
+            ],
+            [
+                'name' => 'comment',
+                'label' => 'Комментарий',
             ],
         ]);
     }

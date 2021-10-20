@@ -11,10 +11,32 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\Product;
 use App\Models\Table;
+use App\Models\Booking;
+use App\Models\City;
 
 class IndexController extends Controller
 {
     use ApiResponser;
+
+    public function getCities(Request $request)
+    {
+        $cities = City::active()->get();
+
+        return $this->success($cities);
+    }
+
+    public function getBookings(Request $request, $place_id = null)
+    {
+        if ($place_id) {
+            $bookings = Booking::where('place_id', $place_id)->active()->get();
+
+            return $this->success($bookings);
+        }
+
+        $bookings = Booking::active()->get();
+
+        return $this->success($bookings);
+    }
 
     public function getPlaces(Request $request)
     {
@@ -25,6 +47,19 @@ class IndexController extends Controller
         }
 
         $places = Place::with('menus', 'tables')->active()->get();
+
+        return $this->success($places);
+    }
+
+    public function getPlacesByCityId(Request $request, $cityId)
+    {
+        if ($request->place_id) {
+            $place = Place::with('menus', 'tables')->findOrFail($request->place_id);
+
+            return $this->success($place);
+        }
+
+        $places = Place::with('menus', 'tables')->where('city_id', $cityId)->active()->get();
 
         return $this->success($places);
     }

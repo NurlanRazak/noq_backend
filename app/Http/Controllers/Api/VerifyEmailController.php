@@ -11,18 +11,24 @@ use App\Models\User;
 class VerifyEmailController extends Controller
 {
 
-    public function __invoke(Request $request): RedirectResponse
+    public function verifyEmail(Request $request)
     {
-        $user = User::find($request->route('id'));
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            if($request->input('two_factor_code') == $user->two_factor_code)
+            {
+                $user->resetTwoFactorCode();
+				$user->markEmailAsVerified();
+                return response()->json([
+                    'message' => 'Your email has been successfully activated',
+                    'success' => true,
+                ]);
 
-        if ($user->hasVerifiedEmail()) {
-            return redirect(env('FRONT_URL') . '/email/verify/already-success');
+            }
+            return response()->json([
+                'message' => 'The two-factor code you entered does not match',
+                'success' => false,
+            ]);
         }
-
-        if ($user->markEmailAsVerified()) {
-            event(new Verified($user));
-        }
-
-        return redirect(env('FRONT_URL') . '/email/verify/success');
     }
 }

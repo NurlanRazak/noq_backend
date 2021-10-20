@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\UserBankCard;
+use App\Traits\ApiResponser;
 
 class OrderController extends Controller
 {
+    use ApiResponser;
 
     public function createNewOrder(Request $request)
     {
@@ -24,13 +26,24 @@ class OrderController extends Controller
             'delivery_method' => $data['delivery_method'],
             'place_id' => $data['place_id'],
             'table_id' => $data['table_id'] ?? null,
+            'comment' => $data['comment'] ?? null,
+            'terrace' => $data['terrace'] ?? null,
+            'people' => $data['people'] ?? null,
+            'at_time' => $data['at_time'] ?? null,
         ]);
+        if (isset($data['card_id'])) {
+            $card = UserBankCard::where('user_id', $user->id)->where('id', $data['card_id'])->firstOrFail();
 
-        $card = UserBankCard::where('user_id', $user->id)->where('id', $data['card_id'])->firstOrFail();
+            if ($card) {
+    			$order->payment_type = 1;
+    			$order->save();
+    		}
+            $charging = \CloudPayment::chargeToken($card, $order->total_amount);
 
-        $charging = \CloudPayment::chargeToken($card, $order->total_amount);
+            return $this->success($order, 'Payment done!');
+        }
 
-        return $order;
+        return $this->success($order, 'Order sent!');
     }
 
     public function orderList(Request $request)
@@ -38,6 +51,7 @@ class OrderController extends Controller
         $userId = $request->user()->id;
 
         $orders = Order::where('user_id', $userId)
+			->with('table')
 			->latest()
             ->get();
 
@@ -49,5 +63,20 @@ class OrderController extends Controller
         $order = Order::where('id', $id)->with(['place'])->first();
 
         return $order;
+    }
+
+    public function cancelOrder(Request $request)
+    {
+        $order = Order::where('id', $request->order_id)->first();
+
+        if ($order && $order->status != Order::CANCELED) {
+            $order->update([
+                'delivery_status' => Order::CANCELED,
+            ]);
+
+            $this->success($order, 'Order canceled!');
+        }
+
+        $this->success($order, 'Order already canceled!');
     }
 }
