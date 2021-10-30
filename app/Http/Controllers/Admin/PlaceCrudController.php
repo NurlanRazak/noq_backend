@@ -38,6 +38,10 @@ class PlaceCrudController extends DefaultCrudController
                 'height' => '150px',
             ],
             [
+                'name' => 'percent',
+                'label' => trans('admin.percent'),
+            ],
+            [
                 'name' => 'status',
                 'label' => trans('admin.status'),
                 'type' => 'select_from_array',
@@ -56,6 +60,10 @@ class PlaceCrudController extends DefaultCrudController
             [
                 'name' => 'name',
                 'label' => trans('admin.name'),
+            ],
+            [
+                'name' => 'percent',
+                'label' => trans('admin.percent'),
             ],
             [
                 'name' => 'city_id',
